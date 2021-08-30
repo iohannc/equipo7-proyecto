@@ -14,8 +14,9 @@ Crear API de conexión a una base de datos de historias de terror.
 ## Especificaciones del Proyecto
 
 ### User History
-![](https://imgur.com/a/TAUNdZH)
+![](https://github.com/frasgado/assets/blob/main/Team7-TheUserStories.jpg?raw=true)
+
 
 ### Uses Case
-![](https://imgur.com/gallery/9pfppKK)
+![](https://raw.githubusercontent.com/frasgado/assets/main/CU-01.jpg)
 
