@@ -7,10 +7,9 @@
 - Fabiola Rasgado Celaya
 - Angel Esteban Torres Trejo
 
-##  Objetivo del  Proyecto:
-Crear API de conexión a una base de datos de historias de terror.
-
 ## Especificaciones del Proyecto
+###  Objetivo del  Proyecto:
+Crear API de conexión a una base de datos de historias de terror.
 ### Descripcion
 Se desarrolla una API sustentada en ExpressJS con el objetivo de registrar y dar a conocer historias de terror de diferentes temáticas en un sistema versatil para cualquier usuario.
 Se espera el desarrollo de un sistema eficiente que pueda ser la base de una comunidad activa dentro del terror literario.
