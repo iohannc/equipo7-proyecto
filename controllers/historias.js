@@ -1,4 +1,4 @@
-const Historia = require("../models/historias");
+const Historia = require("../models/Historia");
 
 // CRUD
 function crearHistoria(req, res) {
