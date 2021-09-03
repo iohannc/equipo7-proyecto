@@ -17,8 +17,11 @@ Se espera el desarrollo de un sistema eficiente que permita ser la base de una c
 
 ### Entidades
 - Usuarios
+
 Seran las personas que desen crear o buscar historias de terror en el sistema
+
 - Administradores
+
 Seran los encargados de depurar el contenido sin que esto los excluya de las capacidades del usuario.
 ### User History
 ![](https://github.com/frasgado/assets/blob/main/Team7-TheUserStories.jpg?raw=true)
