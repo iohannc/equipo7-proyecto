@@ -4,9 +4,9 @@ const Usuario = require("../models/Usuario");
 /* CRUD */
 
 function crearUsuario(req, res){
-    let { userName, nombre, apellido, email, tp_usuario, password } =  req.body; 
+    let { username, nombre, apellido, email, tp_usuario, password } =  req.body; 
     let usuario = new Usuario(
-        userName,
+        username,
         nombre,
         apellido,
         email,
@@ -45,7 +45,7 @@ function modificarUsuario(req, res){
 
 function eliminarUsuario(req, res){
     // Hace falta solucionar lo del id
-    res.status(200).send(`El usuario ${req.userName} ha sido eliminado`);
+    res.status(200).send(`El usuario ${req.username} ha sido eliminado`);
 }
 
 module.exports = {
