@@ -5,5 +5,6 @@ router.get('/', (req, res) => {
 });
 
 router.use('/historias', require('./historias'));
+router.use('/usuarios', require('./usuarios'));
 
 module.exports = router;
