@@ -8,7 +8,7 @@
 - Angel Esteban Torres Trejo
 
 ## Especificaciones del Proyecto
-###  Objetivo del  Proyecto:
+###  Objetivo:
 Crear API de conexión a una base de datos de historias de terror.
 ### Descripcion
 Se desarrolla una API sustentada en ExpressJS con el objetivo de registrar y dar a conocer historias de terror de diferentes temáticas en un sistema versatil para cualquier usuario.
