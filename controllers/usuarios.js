@@ -1,3 +1,4 @@
+const Historia = require("../models/Historia");
 const Usuario = require("../models/Usuario");
 
 /* CRUD */
@@ -25,7 +26,7 @@ function obtenerUsuario(req, res){
         "contrasena",
         0
     );
-    req.send(usuario1);
+    res.send(usuario1);
 }
 
 function modificarUsuario(req, res){
@@ -38,11 +39,12 @@ function modificarUsuario(req, res){
         1
     );
     let modificiaciones = req.body;
-    modficiaciones = {...usuario1, ...modificiaciones};
-    res.send(modficiaciones);
+    usuario1 = {...usuario1, ...modificiaciones};
+    res.status(200).send(usuario1);
 }
 
 function eliminarUsuario(req, res){
+    // Hace falta solucionar lo del id
     res.status(200).send(`El usuario ${req.userName} ha sido eliminado`);
 }
 
