@@ -4,7 +4,7 @@ const {
     obtenerHistorias,
     modificarHistoria,
     eliminarHistoria
-} = require('../controllers/mascotas');
+} = require('../controllers/historias');
 
 router.get('/', obtenerHistorias);
 router.post('/', crearHistoria);

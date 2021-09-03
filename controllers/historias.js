@@ -56,7 +56,7 @@ function modificarHistoria(req, res) {
 }
 
 function eliminarHistoria(req, res) {
-    res.status(200).send(`La historia "${req.name}" ha sido eliminada.`);
+    res.status(200).send(`La historia "${req.titulo}" ha sido eliminada.`);
 }
 
 module.exports = {
