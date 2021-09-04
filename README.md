@@ -26,6 +26,10 @@ Seran los encargados de depurar el contenido sin que esto los excluya de las cap
 - Historias
 
 Los objetos principales que se estarán manejando a través de la API y resguardados en la DB de Mongo, susceptibles a las operaciones CRUD definidas.
+
+![](https://raw.githubusercontent.com/frasgado/assets/main/modelo_horrorstories.jpg)
+
+
 ### User Stories
 ![](https://github.com/frasgado/assets/blob/main/Team7-TheUserStories.jpg?raw=true)
 
@@ -38,7 +42,9 @@ El proyecto a realizar esta sustentado en diferentes tecnologias para tener un d
 - Usamos ExpressJS como base de la arquitectura del backend.
 - Empleamos MongoDB como el admnistrador de bases de datos del proyecto.
 - Node es el entorno de ejecución dentro de nuestro servidor
+
 ### Instrucciones de inicialización
 1. Ubicarse en la carpeta raíz del proyecto
-2. Correr en la linea de comandos "npm run start"
+2. Ejecutar "npm install", para instalar las dependencias requeridas por el proyecto.
+3. Correr en la linea de comandos "npm run start"
 3. Disfrutar 😎
