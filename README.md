@@ -1,4 +1,4 @@
-#Equipo 7 - Fase 2 - Backend Fundamentals - BEDU Santander
+# Equipo 7 - Fase 2 - Backend Fundamentals - BEDU Santander
 
 ## Integrantes:
 - Estefanía Aguilar Arroyo
@@ -22,11 +22,15 @@ Seran las personas que desen crear o buscar historias de terror en el sistema
 - Administradores
 
 Seran los encargados de depurar el contenido sin que esto los excluya de las capacidades del usuario.
-### User History
+
+- Historias
+
+Los objetos principales que se estarán manejando a través de la API y resguardados en la DB de Mongo, susceptibles a las operaciones CRUD definidas.
+### User Stories
 ![](https://github.com/frasgado/assets/blob/main/Team7-TheUserStories.jpg?raw=true)
 
 
-### Uses Case
+### Use Case Diagram
 ![](https://raw.githubusercontent.com/frasgado/assets/main/CU-01.jpg)
 
 ### Tecnologias usadas
@@ -35,6 +39,6 @@ El proyecto a realizar esta sustentado en diferentes tecnologias para tener un d
 - Empleamos MongoDB como el admnistrador de bases de datos del proyecto.
 - Node es el entorno de ejecución dentro de nuestro servidor
 ### Instrucciones de inicialización
-1. Ubicarse en la carpeta raiz del proyecto
+1. Ubicarse en la carpeta raíz del proyecto
 2. Correr en la linea de comandos "npm run start"
 3. Disfrutar 😎
