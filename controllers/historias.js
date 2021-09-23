@@ -8,11 +8,10 @@ function crearHistoria(req, res) {
   const historia = new Historia(body);
   historia
     .save()
-    .then((his) => {
+    .then(historia2 => {
       //Guardando nuevo usuario en MongoDB.
-      return res.status(201).json(updated.publicData());
-    })
-    .catch(next);
+      return res.status(201).json(historia);
+    }).catch()
 }
 function obtenerHistoria(req, res) {
   var id = req.params.titulo;

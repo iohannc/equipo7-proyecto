@@ -8,7 +8,6 @@ const HistoriaSchema = new mongoose.Schema(
   {
     titulo: {
       type: String,
-      unique: true, //este campo no se puede repetir
       required: [true, "no puede estar vacío"],
       index: true,
     },
