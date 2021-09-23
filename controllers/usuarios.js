@@ -19,16 +19,28 @@ function crearUsuario(req, res, next) {
     .catch(next);
 }
 
-function obtenerUsuario(req, res, next) {
-  Usuario.findById(req.params.id)
-    .then((us) => res.send(us))
-    .catch(next);
+function obtenerUsuario(req, res, next) {                              //Obteniendo usuario desde MongoDB.
+  var id = req.params.id;
+  Usuario.findById(id||req.usuario.id, (err, user) => {
+    if (!user || err) {
+      return res.sendStatus(401)
+    }
+    return res.send(user.publicData());
+  }).catch(next);
 }
 
 function obtenerUsuarios(req, res, next) {
-  Usuario.find()
-    .then((uss) => res.status(200).send(uss))
-    .catch(next);
+  Usuario.find({}, function (err, docs) {
+    if (!docs || err) {
+      return res.sendStatus(401)
+    }
+    let array=[]
+    for(let i=0;i<docs.length;i++) {
+      delete docs[i].hash
+      array.push(docs[i])
+    }
+    return res.send(array);
+  }).catch(next);
 }
 function modificarUsuario(req, res, next) {
   Usuario.findById(req.params.id)

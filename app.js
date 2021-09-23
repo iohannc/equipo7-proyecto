@@ -26,7 +26,8 @@ require('./models/Historia')
 
 //Configurando las rutas
 app.use('/v1', require('./routes'));
-
+const cors = require('cors')
+app.use(cors())
 // Inicializando el servidor
 
 // app.listen(process.env.PORT, () => {

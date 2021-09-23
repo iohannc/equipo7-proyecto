@@ -9,9 +9,9 @@ const {
     iniciarSesion,
 } = require("../controllers/usuarios");
 const auth = require('./auth');
-router.get('/', auth.requerido, obtenerUsuario);
+router.get('/:id', auth.requerido, obtenerUsuario);
 // router.get('/contra',cifrarcontraseña);
-router.get('/:id', auth.requerido, obtenerUsuarios);
+router.get('/', auth.requerido, obtenerUsuarios);
 router.post('/', crearUsuario)
 router.post('/entrar', iniciarSesion)
 router.put('/:id', auth.requerido, modificarUsuario)
