@@ -2,7 +2,7 @@ const Historia = require("../models/Historia");
 
 // CRUD
 function crearHistoria(req, res) {
-  const body = req.body,
+  const body = req.body
   const historia = new Historia(body)
   historia.save().then(his => {                                         //Guardando nuevo usuario en MongoDB.
     return res.status(201).json(updated.publicData())
