@@ -2,11 +2,11 @@ const Historia = require("../models/Historia");
 
 // CRUD
 function crearHistoria(req, res) {
-  let { titulo, texto, id_usuario, tags, tematica, ficcion } = req.body;
+  let { titulo, texto, id_Historia, tags, tematica, ficcion } = req.body;
   let historia = new Historia(
     titulo,
     texto,
-    id_usuario,
+    id_Historia,
     tags,
     tematica,
     ficcion
@@ -40,23 +40,28 @@ function obtenerHistorias(req, res) {
 }
 
 function modificarHistoria(req, res) {
-  let historia = new Historia(
-    "Leyenda de la Llorona",
-    `Cupidatat culpa minim exercitation magna magna ad non ex. Minim aute anim eiusmod cillum enim minim. Voluptate sit cupidatat tempor reprehenderit commodo adipisicing nostrud quis deserunt voluptate magna aliquip. Ad cupidatat eiusmod veniam eu nostrud. Voluptate ea dolore exercitation duis tempor aliqua nisi eiusmod. Excepteur Lorem Lorem adipisicing irure mollit.
-    Anim velit duis Lorem nulla tempor. Ullamco culpa in nisi quis eu et pariatur voluptate ex aliquip ex. Voluptate non exercitation proident dolore veniam adipisicing tempor mollit nisi sint adipisicing sunt minim. Consectetur exercitation consectetur dolore dolore occaecat velit laboris exercitation in proident reprehenderit occaecat. Nostrud amet tempor pariatur quis Lorem dolore ullamco in laborum eiusmod do anim pariatur. Voluptate esse fugiat deserunt est mollit elit sit eiusmod. Id excepteur qui velit excepteur aute cupidatat consectetur culpa deserunt sint.
-    Ad ea magna nisi voluptate pariatur irure. Quis cupidatat commodo tempor minim ut aliqua velit dolore aliqua excepteur sint. Consectetur dolore in non duis sint pariatur incididunt pariatur irure excepteur id dolor cillum. Eu mollit tempor deserunt tempor culpa anim aute tempor. Aliqua veniam laborum deserunt anim sint fugiat anim cupidatat incididunt tempor et excepteur sunt. In culpa aliqua est ex voluptate est nulla amet laboris labore ea excepteur qui aute. Aliquip mollit cupidatat aliquip pariatur.`,
-    8,
-    ["leyenda", "regional", "paranormal", "fantasmas"],
-    "Leyendas",
-    false
-  );
-  let modificaciones = req.body;
-  historia = {...historia, ...modificaciones};
-  res.status(200).send(historia);
+  Historia.findById(req.params.id)
+  .then(his => {
+      if(!his) return res.sendStatus(404);
+      const nuevaInfo = req.body;
+      const nuevaInfoKeys = Object.keys(nuevaInfo);
+      for (let i = 0; i < nuevaInfoKeys.length; i++) {
+          if(typeof his[nuevaInfoKeys[i]] !== "undefined"){
+              console.log(his[nuevaInfoKeys[i]]);
+              his[nuevaInfoKeys[i]] = nuevaInfo[nuevaInfoKeys[i]];
+          } else continue;
+      }
+      us.save()
+      .then(updated => res.status(201).json(updated.publicData()))
+      .catch(next);
+  })
+  .catch(next);
 }
 
 function eliminarHistoria(req, res) {
-    res.status(200).send(`La historia "${req.titulo}" ha sido eliminada.`);
+  Historia.findOneAndDelete({_id:req.params.id})
+  .then(r => res.status(200).send('La historia ha sido eliminada'))
+  .catch(next);
 }
 
 module.exports = {
