@@ -12,9 +12,7 @@ const HistoriaSchema = new mongoose.Schema(
       required: [true, "no puede estar vacío"],
       index: true,
     },
-    tags: {
-      type: String
-    },
+    tags: String,
     id_usuario: { type: mongoose.Schema.Types.ObjectId, ref: 'Usuario'},
     texto: String,
     tematica: String,

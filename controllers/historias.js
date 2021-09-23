@@ -17,7 +17,7 @@ function obtenerHistoria(req, res) {
       return res.sendStatus(401)
     }
     return res.send(user);
-  }).catch(next);
+  })
 }
 function obtenerHistorias(req, res) {
   Historia.find({}, function (err, docs) {
@@ -29,7 +29,7 @@ function obtenerHistorias(req, res) {
       array.push(docs[i])
     }
     return res.status(200).send(array);
-  }).catch(next);
+  })
 }
 
 
