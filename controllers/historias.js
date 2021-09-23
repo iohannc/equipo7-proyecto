@@ -11,15 +11,16 @@ function crearHistoria(req, res) {
   }).catch(next)
 }
 function obtenerHistoria(req, res) {
-  Historia.findById(req.params.titulo, (err, his) => {
-    if (!his || err) {
+  var id = req.params.id;
+  Historia.findById(id, (err, user) => {
+    if (!user || err) {
       return res.sendStatus(401)
     }
-    return res.send(his.publicData());
+    return res.send(user.publicData());
   }).catch(next);
 }
 function obtenerHistorias(req, res) {
-  Historia.find({}, function (err, docs) {
+  Usuario.find({}, function (err, docs) {
     if (!docs || err) {
       return res.sendStatus(401)
     }

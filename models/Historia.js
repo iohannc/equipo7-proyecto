@@ -1,9 +1,4 @@
-const crypto = require('crypto');                             
-//Importando módulo crypto, pendiente de instalar.
-const jwt = require('jsonwebtoken');                          
-//Importando módulo jsonwebtoken, pendiente de instalar.
-const secret = require('../config').secret;                   
-// ???? es un misterio que resolveremos en la última sesión
+
 
 // Usuario.js
 const mongoose = require("mongoose"); //Importando mongoose.
@@ -18,13 +13,13 @@ const HistoriaSchema = new mongoose.Schema(
       index: true,
     },
     tags: {
-      type: Array
+      type: String
     },
     id_usuario: { type: mongoose.Schema.Types.ObjectId, ref: 'Usuario'},
     texto: String,
     tematica: String,
     ficcion: Boolean,
-    url_origen: Boolean,
+    url_origen: String,
   },
   { collection: "historias", timestamps: true }
 );
