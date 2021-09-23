@@ -7,6 +7,7 @@ const {
 } = require('../controllers/historias');
 
 router.get('/', obtenerHistorias);
+router.get('/:titulo', obtenerHistorias);
 router.post('/', crearHistoria);
 router.put('/:id', modificarHistoria);
 router.delete('/:id', eliminarHistoria);
