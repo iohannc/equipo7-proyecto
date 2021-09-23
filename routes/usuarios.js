@@ -4,6 +4,7 @@ const {
     crearUsuario,
     obtenerUsuario,
     obtenerUsuarios,
+    obtenerUsuariosLimitados,
     modificarUsuario,
     eliminarUsuario,
     iniciarSesion,
@@ -13,6 +14,7 @@ const auth = require('./auth');
 // router.get('/contra',cifrarcontraseña);
 router.get('/:id', auth.requerido, obtenerUsuario);
 router.get('/', auth.requerido, obtenerUsuarios);
+router.get('/numero/:n', auth.requerido, obtenerUsuariosLimitados);
 router.post('/', crearUsuario)
 router.post('/entrar', iniciarSesion)
 router.put('/:id', auth.requerido, modificarUsuario)

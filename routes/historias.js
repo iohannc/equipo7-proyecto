@@ -4,10 +4,12 @@ const {
     obtenerHistoria,
     obtenerHistorias,
     modificarHistoria,
-    eliminarHistoria
+    eliminarHistoria,
+    obtenerHistoriasLimitadas
 } = require('../controllers/historias');
 const auth = require('./auth');
 router.get('/', obtenerHistorias);
+router.get('/:n', obtenerHistoriasLimitadas); 
 router.get('/:titulo', obtenerHistoria);
 router.post('/', crearHistoria);
 router.put('/:id', auth.requerido,modificarHistoria);
