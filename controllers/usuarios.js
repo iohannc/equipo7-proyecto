@@ -61,4 +61,5 @@ module.exports = {
   obtenerUsuarios,
   modificarUsuario,
   eliminarUsuario,
+  iniciarSesion
 };
