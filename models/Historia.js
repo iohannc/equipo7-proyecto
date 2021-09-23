@@ -20,7 +20,7 @@ const HistoriaSchema = new mongoose.Schema(
     tags: {
       type: Array
     },
-    id_usuario: { type: String, required: true },
+    id_usuario: { type: mongoose.Schema.Types.ObjectId, ref: 'Usuario'},
     texto: String,
     tematica: String,
     ficcion: Boolean,
