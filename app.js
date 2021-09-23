@@ -11,7 +11,8 @@ app.use(bodyParser.json());
 const mongoose = require('mongoose');
 
 mongoose.connect(
-	`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.fncuh.mongodb.net/biblioteca_de_terror?retryWrites=true&w=majority`
+	process.env.MONGODB_URI,
+    { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true }
 	);
 
 mongoose.set("debug", true)
@@ -23,7 +24,6 @@ require('./models/Historia')
 app.use('/v1', require('./routes'));
 
 // Inicializando el servidor
-const PORT = 4001;
-app.listen(PORT, () => {
-    console.log(`Server is listening on ${PORT}`);
+app.listen(process.env.PORT, () => {
+    console.log(`Server is listening on ${process.env.PORT}`);
 });
