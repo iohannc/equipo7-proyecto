@@ -11,7 +11,7 @@ function crearHistoria(req, res) {
   }).catch(next)
 }
 function obtenerHistoria(req, res) {
-  var id = req.params.id;
+  var id = req.params.titulo;
   Historia.findById(id, (err, user) => {
     if (!user || err) {
       return res.sendStatus(401)
@@ -20,7 +20,7 @@ function obtenerHistoria(req, res) {
   }).catch(next);
 }
 function obtenerHistorias(req, res) {
-  Usuario.find({}, function (err, docs) {
+  Historia.find({}, function (err, docs) {
     if (!docs || err) {
       return res.sendStatus(401)
     }
