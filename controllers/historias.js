@@ -1,4 +1,6 @@
-const Historia = require("../models/Historia");
+const { json } = require("body-parser");
+const mongoose = require("mongoose");
+const Historia = mongoose.model("Historia");
 
 // CRUD
 function crearHistoria(req, res) {
@@ -17,10 +19,14 @@ function obtenerHistoria(req, res) {
   }).catch(next);
 }
 function obtenerHistorias(req, res) {
-  Historia.find()
-    .then((uss) => res.status(200).send(uss))
-    .catch(next);
+  Historia.find({}, function (err, docs) {
+    if (!docs || err) {
+      return res.sendStatus(401)
+    }
+    return res.status(200).send(docs);
+  }).catch(next);
 }
+
 
 function modificarHistoria(req, res) {
   Historia.findById(req.params.id)
