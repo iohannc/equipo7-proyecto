@@ -34,8 +34,8 @@ function obtenerUsuario(req, res, next) {                              //Obtenie
     if (!user || err) {
       return res.sendStatus(401)
     }
-    user.hash="";
-    user.salt="";
+    user[0].hash="";
+    user[0].salt="";
     return res.send(user);
   }).catch(next);
 }
