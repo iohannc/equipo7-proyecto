@@ -36,10 +36,12 @@ function obtenerUsuarios(req, res, next) {
     }
     let array=[]
     for(let i=0;i<docs.length;i++) {
-      delete docs[i].hash
+      let doc=docs[i]
+      docs[i].hash=""
+      docs[i].salt=""
       array.push(docs[i])
     }
-    return res.send(array);
+    return res.status(200).send(array);
   }).catch(next);
 }
 function modificarUsuario(req, res, next) {
