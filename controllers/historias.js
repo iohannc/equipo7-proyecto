@@ -9,9 +9,12 @@ function crearHistoria(req, res) {
   }).catch(next)
 }
 function obtenerHistoria(req, res) {
-  Historia.find(req.params.titulo)
-  .then(uss => res.status(200).send(uss))
-  .catch(next);
+  Historia.findById(req.params.titulo, (err, his) => {
+    if (!his || err) {
+      return res.sendStatus(401)
+    }
+    return res.send(his.publicData());
+  }).catch(next);
 }
 function obtenerHistorias(req, res) {
   Historia.find()
