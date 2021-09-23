@@ -7,11 +7,23 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
+// Configuración de base de datos
+const mongoose = require('mongoose');
+
+mongoose.connect(
+	process.env.MONGODB_URI,
+    { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true }
+	);
+
+mongoose.set("debug", true)
+
+require('./models/Usuario')
+require('./models/Historia')
+
 //Configurando las rutas
 app.use('/v1', require('./routes'));
 
 // Inicializando el servidor
-const PORT = 4001;
-app.listen(PORT, () => {
-    console.log(`Server is listening on ${PORT}`);
+app.listen(process.env.PORT, () => {
+    console.log(`Server is listening on ${process.env.PORT}`);
 });
