@@ -1,6 +1,7 @@
-const { json } = require("body-parser");
-const mongoose = require("mongoose");
-const Usuario = mongoose.model("Usuario");
+const mongoose = require("mongoose")
+const Usuario = mongoose.model("Usuario")
+const passport = require('passport');
+
 
 /* CRUD */
 
@@ -18,14 +19,24 @@ function crearUsuario(req, res, next) {
     })
     .catch(next);
 }
-
+// function obtenerUsuario(req, res, next) {                              //Obteniendo usuario desde MongoDB.
+//   var id = req.params.id;
+//   Usuario.findById(id||req.usuario.id, (err, user) => {
+//     if (!user || err) {
+//       return res.sendStatus(401)
+//     }
+//     return res.send(user.publicData());
+//   }).catch(next);
+// }
 function obtenerUsuario(req, res, next) {                              //Obteniendo usuario desde MongoDB.
   var id = req.params.id;
-  Usuario.findById(id||req.usuario.id, (err, user) => {
+  Usuario.find({_id:id}, (err, user) => {
     if (!user || err) {
       return res.sendStatus(401)
     }
-    return res.send(user.publicData());
+    user.hash="";
+    user.salt="";
+    return res.send(user);
   }).catch(next);
 }
 
@@ -36,7 +47,6 @@ function obtenerUsuarios(req, res, next) {
     }
     let array=[]
     for(let i=0;i<docs.length;i++) {
-      let doc=docs[i]
       docs[i].hash=""
       docs[i].salt=""
       array.push(docs[i])

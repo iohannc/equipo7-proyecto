@@ -24,7 +24,7 @@ function obtenerHistorias(req, res) {
     if (!docs || err) {
       return res.sendStatus(401)
     }
-    return res.status(200).send(docs);
+    return res.send(docs);
   }).catch(next);
 }
 
