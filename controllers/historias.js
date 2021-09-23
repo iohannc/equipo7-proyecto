@@ -12,11 +12,11 @@ function crearHistoria(req, res) {
 }
 function obtenerHistoria(req, res) {
   var id = req.params.titulo;
-  Historia.findById(id, (err, user) => {
+  Historia.find({_id:id}, (err, user) => {
     if (!user || err) {
       return res.sendStatus(401)
     }
-    return res.send(user.publicData());
+    return res.send(user);
   }).catch(next);
 }
 function obtenerHistorias(req, res) {
@@ -24,7 +24,11 @@ function obtenerHistorias(req, res) {
     if (!docs || err) {
       return res.sendStatus(401)
     }
-    return res.send(docs);
+    let array=[]
+    for(let i=0;i<docs.length;i++) {
+      array.push(docs[i])
+    }
+    return res.status(200).send(array);
   }).catch(next);
 }
 
