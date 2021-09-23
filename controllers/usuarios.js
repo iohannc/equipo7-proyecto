@@ -74,7 +74,17 @@ function iniciarSesion(req, res, next) {
     }
   })(req, res, next);
 }
-
+// function cifrarcontraseña(req, res, next) {
+//   Usuario.updateMany({}, 
+//     {contraseña:"loquesea"}, function (err, docs) {
+//     if (err){
+//         console.log(err)
+//     }
+//     else{
+//         console.log("Updated Docs : ", docs);
+//     }
+// });
+// }
 module.exports = {
   crearUsuario,
   obtenerUsuario,

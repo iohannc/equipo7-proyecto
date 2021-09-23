@@ -15,7 +15,7 @@ const mongoose = require('mongoose');
 //     { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true }
 // 	);
 mongoose.connect(
-	"mongodb+srv://hugo:hugo@cluster0.fncuh.mongodb.net/test",
+	"mongodb+srv://hugo:hugo@cluster0.fncuh.mongodb.net/biblioteca_de_terror",
     { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true }
 	);
     

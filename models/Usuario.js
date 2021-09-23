@@ -43,12 +43,14 @@ const UsuarioSchema = new mongoose.Schema(
     },
     nombre: { type: String, required: true },
     apellido: { type: String},
-    email: String,
     password: String,
     administrador: Boolean,
+    hash: String, //este campo se utilizará para la sesión
+salt: String, //este campo se utilizará para la sesión
   },
   { collection: "usuarios", timestamps: true }
 );
+
 UsuarioSchema.plugin(uniqueValidator, { message: "Ya existe" });
 UsuarioSchema.methods.publicData = () => {
   return {
