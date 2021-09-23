@@ -8,11 +8,15 @@ function crearHistoria(req, res) {
     return res.status(201).json(updated.publicData())
   }).catch(next)
 }
-
-function obtenerHistorias(req, res) {
+function obtenerHistoria(req, res) {
   Historia.find(req.params.titulo)
   .then(uss => res.status(200).send(uss))
   .catch(next);
+}
+function obtenerHistorias(req, res) {
+  Historia.find()
+    .then((uss) => res.status(200).send(uss))
+    .catch(next);
 }
 
 function modificarHistoria(req, res) {
@@ -42,6 +46,7 @@ function eliminarHistoria(req, res) {
 
 module.exports = {
     crearHistoria,
+    obtenerHistoria,
     obtenerHistorias,
     modificarHistoria,
     eliminarHistoria

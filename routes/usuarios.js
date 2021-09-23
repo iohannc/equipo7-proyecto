@@ -7,11 +7,11 @@ const {
     modificarUsuario,
     eliminarUsuario
 } = require("../controllers/usuarios");
-
-router.get('/:id', obtenerUsuario);
-router.get('/', obtenerUsuarios);
-router.post('/', crearUsuario);
-router.put('/:id', modificarUsuario); // Hace falta solucionar lo del id
-router.delete('/:id', eliminarUsuario);
-
+const auth = require('./auth');
+router.get('/', auth.requerido, obtenerUsuario)
+router.get('/:id', auth.requerido, obtenerUsuarios);
+router.post('/', crearUsuario)
+router.post('/entrar', iniciarSesion)
+router.put('/:id', auth.requerido, modificarUsuario)
+router.delete('/:id', auth.requerido, eliminarUsuario)
 module.exports = router;
