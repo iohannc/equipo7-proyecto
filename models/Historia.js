@@ -1,4 +1,13 @@
-const mongoose = require("mongoose");
+const crypto = require('crypto');                             
+//Importando módulo crypto, pendiente de instalar.
+const jwt = require('jsonwebtoken');                          
+//Importando módulo jsonwebtoken, pendiente de instalar.
+const secret = require('../config').secret;                   
+// ???? es un misterio que resolveremos en la última sesión
+
+// Usuario.js
+const mongoose = require("mongoose"); //Importando mongoose.
+const uniqueValidator = require("mongoose-unique-validator"); //Importando módulo mongoose-unique-validator, pendiente de instalar.
 
 const HistoriaSchema = new mongoose.Schema(
   {
@@ -19,7 +28,7 @@ const HistoriaSchema = new mongoose.Schema(
   },
   { collection: "historias", timestamps: true }
 );
-
+HistoriaSchema.plugin(uniqueValidator, { message: "Ya existe" });
 HistoriaSchema.methods.publicData = () => {
   return {
     id: this._id,
