@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const Historia = mongoose.model("Historia");
 
 // CRUD
-function crearHistoria(req, res) {
+function crearHistoria(req, res,next) {
   const body = req.body;
   const historia = new Historia(body);
   historia
@@ -11,18 +11,18 @@ function crearHistoria(req, res) {
     .then(historia2 => {
       //Guardando nuevo usuario en MongoDB.
       return res.status(201).json(historia);
-    }).catch()
+    }).catch(next)
 }
-function obtenerHistoria(req, res) {
+function obtenerHistoria(req, res,next) {
   var id = req.params.titulo;
   Historia.find({ _id: id }, (err, user) => {
     if (!user || err) {
       return res.sendStatus(401);
     }
     return res.send(user);
-  });
+  }).catch(next);
 }
-function obtenerHistorias(req, res) {
+function obtenerHistorias(req, res,next) {
   Historia.find({}, function (err, docs) {
     if (!docs || err) {
       return res.sendStatus(401);
@@ -32,10 +32,10 @@ function obtenerHistorias(req, res) {
       array.push(docs[i]);
     }
     return res.status(200).send(array);
-  });
+  }).catch(next);
 }
 
-function obtenerHistoriasLimitadas(req, res) {
+function obtenerHistoriasLimitadas(req, res,next) {
   Historia.find({},function (err, docs) {
     if (!docs || err) {
       return res.sendStatus(401);
@@ -45,7 +45,7 @@ function obtenerHistoriasLimitadas(req, res) {
         array.push(docs[i]);
       }
     return res.status(200).send(array);
-    });
+    }).catch(next);
 }
 
 function modificarHistoria(req, res,next) {
@@ -66,10 +66,9 @@ function modificarHistoria(req, res,next) {
     
 }
 
-function eliminarHistoria(req, res) {
+function eliminarHistoria(req, res,next) {
   Historia.findOneAndDelete({ _id: req.params.id })
-    .then((r) => res.status(200).send("La historia ha sido eliminada"))
-    
+    .then((r) => res.status(200).send("La historia ha sido eliminada")).catch(next);
 }
 
 module.exports = {
