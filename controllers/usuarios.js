@@ -28,8 +28,13 @@ function crearUsuario(req, res, next) {
 //   }).catch(next);
 // }
 function obtenerUsuario(req, res, next) {
-  //Obteniendo usuario desde MongoDB.
+  // //Obteniendo usuario desde MongoDB.
   var id = req.params.id;
+  // Usuario.findOne(req.params.id)
+  // .then((us) => {
+  //   if (!us) return res.sendStatus(401);
+  //   return res.send(us.publicData())
+  // }).catch(next);
   Usuario.find({ _id: id }, (err, user) => {
     if (!user || err) {
       return res.sendStatus(401);

@@ -48,7 +48,7 @@ function obtenerHistoriasLimitadas(req, res) {
     });
 }
 
-function modificarHistoria(req, res) {
+function modificarHistoria(req, res,next) {
   Historia.findById(req.params.id)
     .then((his) => {
       if (!his) return res.sendStatus(404);
@@ -60,9 +60,9 @@ function modificarHistoria(req, res) {
           his[nuevaInfoKeys[i]] = nuevaInfo[nuevaInfoKeys[i]];
         } else continue;
       }
-      us.save()
-        .then((updated) => res.status(201).json(updated.publicData()))
-    })
+      his.save()
+        .then((updated) => res.status(201).json(his)).catch(next)
+    }).catch(next)
     
 }
 
