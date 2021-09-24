@@ -1,25 +1,26 @@
-const mongoose = require("mongoose");
+
+
+// Usuario.js
+const mongoose = require("mongoose"); //Importando mongoose.
+const uniqueValidator = require("mongoose-unique-validator"); //Importando módulo mongoose-unique-validator, pendiente de instalar.
 
 const HistoriaSchema = new mongoose.Schema(
   {
     titulo: {
       type: String,
-      unique: true, //este campo no se puede repetir
       required: [true, "no puede estar vacío"],
       index: true,
     },
-    tags: {
-      type: Array
-    },
-    id_usuario: { type: String, required: true },
+    tags: String,
+    id_usuario: { type: mongoose.Schema.Types.ObjectId, ref: 'Usuario'},
     texto: String,
     tematica: String,
     ficcion: Boolean,
-    url_origen: Boolean,
+    url_origen: String,
   },
   { collection: "historias", timestamps: true }
 );
-
+HistoriaSchema.plugin(uniqueValidator, { message: "Ya existe" });
 HistoriaSchema.methods.publicData = () => {
   return {
     id: this._id,
