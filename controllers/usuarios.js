@@ -59,6 +59,7 @@ function obtenerUsuarios(req, res, next) {
     return res.status(200).send(array);
   }).catch(next);
 }
+
 function obtenerUsuariosLimitados(req, res) {
   Usuario.find({}, function (err, docs) {
     if (!docs || err) {

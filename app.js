@@ -6,7 +6,7 @@ const app = express();
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
-var passport = require('passport');
+const passport = require('passport');
 
 // Configuración de base de datos
 const mongoose = require('mongoose');
@@ -26,8 +26,7 @@ require('./models/Usuario')
 require('./models/Historia')
 app.use(passport.initialize());
 app.use(passport.session());
-// Add the line below, which you're missing:
-require('./config/passport')
+
 //Configurando las rutas
 app.use('/v1', require('./routes'));
 // Inicializando el servidor

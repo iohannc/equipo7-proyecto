@@ -8,8 +8,7 @@ function crearHistoria(req, res,next) {
   const historia = new Historia(body);
   historia
     .save()
-    .then(historia2 => {
-      //Guardando nuevo usuario en MongoDB.
+    .then( () => {
       return res.status(201).json(historia);
     }).catch(next)
 }
@@ -68,7 +67,7 @@ function modificarHistoria(req, res,next) {
 
 function eliminarHistoria(req, res,next) {
   Historia.findOneAndDelete({ _id: req.params.id })
-    .then((r) => res.status(200).send("La historia ha sido eliminada")).catch(next);
+    .then( () => res.status(200).send("La historia ha sido eliminada")).catch(next);
 }
 
 module.exports = {
