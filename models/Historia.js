@@ -20,7 +20,7 @@ const HistoriaSchema = new mongoose.Schema(
   { collection: "historias", timestamps: true }
 );
 
-UsuarioSchema.methods.publicData = () => {
+HistoriaSchema.methods.publicData = () => {
   return {
     id: this._id,
     titulo: this.titulo,
