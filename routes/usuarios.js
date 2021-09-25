@@ -7,11 +7,10 @@ const {
     obtenerUsuariosLimitados,
     modificarUsuario,
     eliminarUsuario,
-    iniciarSesion,
+    iniciarSesion
 } = require("../controllers/usuarios");
 const auth = require('./auth');
 
-// router.get('/contra',cifrarcontraseña);
 router.get('/:id', auth.requerido, obtenerUsuario);
 router.get('/', auth.requerido, obtenerUsuarios);
 router.get('/limite/:n', auth.requerido, obtenerUsuariosLimitados);

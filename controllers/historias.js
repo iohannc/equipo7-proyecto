@@ -13,12 +13,13 @@ function crearHistoria(req, res,next) {
     }).catch(next)
 }
 function obtenerHistoria(req, res,next) {
-  var id = req.params.titulo;
-  Historia.find({ _id: id }, (err, user) => {
-    if (!user || err) {
+  const titulo = req.params.titulo;
+  const re = new RegExp(`${titulo}`, 'i')
+  Historia.findOne({ titulo : re}, (err, historia) => {
+    if (!historia || err) {
       return res.sendStatus(401);
     }
-    return res.send(user);
+    return res.send(historia);
   }).catch(next);
 }
 function obtenerHistorias(req, res,next) {
@@ -49,8 +50,8 @@ function obtenerHistoriasLimitadas(req, res,next) {
 
 function modificarHistoria(req, res,next) {
   Historia.findById(req.params.id)
-    .then((his) => {
-      if (!his) return res.sendStatus(404);
+    .then((historia) => {
+      if (!historia) return res.sendStatus(404);
       const nuevaInfo = req.body;
       const nuevaInfoKeys = Object.keys(nuevaInfo);
       for (let i = 0; i < nuevaInfoKeys.length; i++) {

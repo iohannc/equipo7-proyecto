@@ -18,23 +18,9 @@ function crearUsuario(req, res, next) {
     })
     .catch(next);
 }
-// function obtenerUsuario(req, res, next) {                              //Obteniendo usuario desde MongoDB.
-//   var id = req.params.id;
-//   Usuario.findById(id||req.usuario.id, (err, user) => {
-//     if (!user || err) {
-//       return res.sendStatus(401)
-//     }
-//     return res.send(user.publicData());
-//   }).catch(next);
-// }
 function obtenerUsuario(req, res, next) {
   // //Obteniendo usuario desde MongoDB.
   var id = req.params.id;
-  // Usuario.findOne(req.params.id)
-  // .then((us) => {
-  //   if (!us) return res.sendStatus(401);
-  //   return res.send(us.publicData())
-  // }).catch(next);
   Usuario.find({ _id: id }, (err, user) => {
     if (!user || err) {
       return res.sendStatus(401);
@@ -131,17 +117,7 @@ function iniciarSesion(req, res, next) {
     }
   )(req, res, next);
 }
-// function cifrarcontraseña(req, res, next) {
-//   Usuario.updateMany({},
-//     {contraseña:"loquesea"}, function (err, docs) {
-//     if (err){
-//         console.log(err)
-//     }
-//     else{
-//         console.log("Updated Docs : ", docs);
-//     }
-// });
-// }
+
 module.exports = {
   crearUsuario,
   obtenerUsuario,

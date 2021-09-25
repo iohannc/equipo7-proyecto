@@ -9,9 +9,9 @@ const {
 } = require('../controllers/historias');
 const auth = require('./auth');
 router.get('/', obtenerHistorias);
-router.get('/:n', obtenerHistoriasLimitadas); 
+router.get('/limite/:n', obtenerHistoriasLimitadas); 
 router.get('/:titulo', obtenerHistoria);
-router.post('/', crearHistoria);
+router.post('/', auth.requerido, crearHistoria);
 router.put('/:id', auth.requerido,modificarHistoria);
 router.delete('/:id', auth.requerido,eliminarHistoria);
 
