@@ -1,11 +1,16 @@
 const { json } = require("body-parser");
+const jwt = require('jsonwebtoken');
 const mongoose = require("mongoose");
 const Historia = mongoose.model("Historia");
+const Usuario = mongoose.model("Usuario")
 
 // CRUD
 function crearHistoria(req, res,next) {
   const body = req.body;
+  const token = req.headers.authorization.split(' ');
+  const jwt_payload = jwt.decode(token[1]); 
   const historia = new Historia(body);
+  historia["id_usuario"] = jwt_payload.id;
   historia
     .save()
     .then( () => {
@@ -52,7 +57,11 @@ function modificarHistoria(req, res,next) {
   Historia.findById(req.params.id)
     .then((historia) => {
       if (!historia) return res.sendStatus(404);
+      const token = req.headers.authorization.split(' ');
+      const jwt_payload = jwt.decode(token[1]); 
       const nuevaInfo = req.body;
+      const user = Usuario.findById(jwt_payload.id);
+      if (user.administrador || user._id === historia["id_usuario"]) { 
       const nuevaInfoKeys = Object.keys(nuevaInfo);
       for (let i = 0; i < nuevaInfoKeys.length; i++) {
         if (typeof his[nuevaInfoKeys[i]] !== "undefined") {
@@ -60,8 +69,9 @@ function modificarHistoria(req, res,next) {
           his[nuevaInfoKeys[i]] = nuevaInfo[nuevaInfoKeys[i]];
         } else continue;
       }
-      his.save()
-        .then((updated) => res.status(201).json(his)).catch(next)
+    }
+      historia.save()
+        .then((updated) => res.status(201).json(historia)).catch(next)
     }).catch(next)
     
 }
