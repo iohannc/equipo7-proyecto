@@ -1,22 +1,6 @@
-// class Usuario {
-//     constructor(username, nombre, apellido, email, password, administrador) {
-//         this.username = username;
-//         this.nombre = nombre;
-//         this.apellido = apellido;
-//         this.email = email;
-//         this.password = password;
-//         this.administrador = administrador;
-//     }
-// }
-
-// module.exports = Usuario;
-
 const crypto = require("crypto");
-//Importando módulo crypto, pendiente de instalar.
 const jwt = require("jsonwebtoken");
-//Importando módulo jsonwebtoken, pendiente de instalar.
 const secret = require("../config").secret;
-// ???? es un misterio que resolveremos en la última sesión
 
 // Usuario.js
 const mongoose = require("mongoose"); //Importando mongoose.
@@ -51,7 +35,8 @@ const UsuarioSchema = new mongoose.Schema(
 );
 
 UsuarioSchema.plugin(uniqueValidator, { message: "Ya existe" });
-UsuarioSchema.methods.publicData = () => {
+
+UsuarioSchema.methods.publicData = function() {
   return {
     id: this._id,
     username: this.username,

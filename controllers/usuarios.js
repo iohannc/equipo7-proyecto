@@ -39,10 +39,11 @@ function obtenerUsuario(req, res, next) {
     if (!user || err) {
       return res.sendStatus(401);
     }
+    // No pudimos solucionar el problema con el método publicData()
     user[0].hash = "";
     user[0].salt = "";
     return res.send(user);
-  }).catch(next);
+  }).catch(err => res.send(err));
 }
 
 function obtenerUsuarios(req, res, next) {
