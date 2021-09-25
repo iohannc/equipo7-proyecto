@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Usuario = mongoose.model("Usuario");
 const passport = require("passport");
+const jwt = require('jsonwebtoken');
 
 /* CRUD */
 
@@ -29,7 +30,7 @@ function obtenerUsuario(req, res, next) {
     user[0].hash = "";
     user[0].salt = "";
     return res.send(user);
-  }).catch(err => res.send(err));
+  }).catch((err) => res.send(err));
 }
 
 function obtenerUsuarios(req, res, next) {
@@ -85,19 +86,30 @@ function modificarUsuario(req, res, next) {
 }
 
 function eliminarUsuario(req, res, next) {
-  Usuario.findOneAndDelete({ _id: req.params.id })
-    .then((r) => res.status(200).send("El usuario ha sido eliminado"))
-    .catch(next);
+  const token = req.headers.authorization.split(" ");
+  const jwt_payload = jwt.decode(token[1]);
+  const nuevaInfo = req.body;
+  if (
+    jwt_payload._id == req.params.id ||
+    Usuario.findById(jwt_payload.id).then((admin) => admin.administrador)
+  ) {
+    Usuario.findOneAndDelete({ _id: req.params.id })
+      .then((r) => res.status(200).send("El usuario ha sido eliminado"))
+      .catch(next);
+  }
 }
+
 function iniciarSesion(req, res, next) {
   if (!req.body.email) {
-    return res.status(422).json({ errors: { email: "El campo email no puede estar vacío." } });
+    return res
+      .status(422)
+      .json({ errors: { email: "El campo email no puede estar vacío." } });
   }
 
   if (!req.body.password) {
-    return res
-      .status(422)
-      .json({ errors: { password: "El campo password no puede estar vacío." } });
+    return res.status(422).json({
+      errors: { password: "El campo password no puede estar vacío." },
+    });
   }
 
   passport.authenticate(

@@ -5,11 +5,16 @@ const {
     obtenerHistorias,
     modificarHistoria,
     eliminarHistoria,
-    obtenerHistoriasLimitadas
+    obtenerHistoriasLimitadas,
+    buscarPorAtributo,
+    buscarAtributo
 } = require('../controllers/historias');
 const auth = require('./auth');
+
 router.get('/', obtenerHistorias);
 router.get('/limite/:n', obtenerHistoriasLimitadas); 
+router.get('/buscarPorAtributo', buscarPorAtributo);
+router.get('/buscarAtributo', buscarAtributo);
 router.get('/:titulo', obtenerHistoria);
 router.post('/', auth.requerido, crearHistoria);
 router.put('/:id', auth.requerido, modificarHistoria);

@@ -43,9 +43,7 @@ function obtenerHistorias(req, res, next) {
 
 function obtenerHistoriasLimitadas(req, res, next) {
   Historia.find({}, function (err, docs) {
-    if (!docs || err) {
-      return res.sendStatus(401);
-    }
+    if (!docs || err) return res.sendStatus(404);
   })
     .limit(parseInt(req.params.n))
     .then((docs) => {
@@ -58,15 +56,39 @@ function obtenerHistoriasLimitadas(req, res, next) {
     .catch(next);
 }
 
+function buscarPorAtributo(req, res, next) {
+    Historia.find(req.query, function(err, docs){
+        if (!docs || err) return res.sendStatus(404);
+    })
+    .then(historias => res.status(200).send(historias))
+    .catch(next);
+}
+
+function buscarAtributo(req, res, next) {
+    const projection = {_id: 0};
+    for (let attr in req.query) {
+        projection[req.query[attr]] = 1
+    }
+    Historia.aggregate([{
+        $project: {
+            ...projection
+        }
+    }])
+    .then(docs => res.status(200).send(docs))
+    .catch(next);
+}
+
 function modificarHistoria(req, res, next) {
   Historia.findById(req.params.id)
-    .then(historia => {
+    .then((historia) => {
       if (!historia) return res.sendStatus(404);
       const token = req.headers.authorization.split(" ");
       const jwt_payload = jwt.decode(token[1]);
       const nuevaInfo = req.body;
-      if (jwt_payload._id == historia.id_usuario ||
-        Usuario.findById(jwt_payload.id).then(admin => admin.administrador)) {
+      if (
+        jwt_payload._id == historia.id_usuario ||
+        Usuario.findById(jwt_payload.id).then((admin) => admin.administrador)
+      ) {
         const nuevaInfoKeys = Object.keys(nuevaInfo);
         for (let i = 0; i < nuevaInfoKeys.length; i++) {
           if (typeof historia[nuevaInfoKeys[i]] !== "undefined") {
@@ -86,20 +108,24 @@ function modificarHistoria(req, res, next) {
 }
 
 function eliminarHistoria(req, res, next) {
-    Historia.findById(req.params.id)
-    .then(historia => {
-    const token = req.headers.authorization.split(" ");
-    const jwt_payload = jwt.decode(token[1]);
-    if (jwt_payload._id == historia.id_usuario ||
-      Usuario.findById(jwt_payload.id).then(admin => admin.administrador)) {
+  Historia.findById(req.params.id)
+    .then((historia) => {
+      const token = req.headers.authorization.split(" ");
+      const jwt_payload = jwt.decode(token[1]);
+      if (
+        jwt_payload._id == historia.id_usuario ||
+        Usuario.findById(jwt_payload.id).then((admin) => admin.administrador)
+      ) {
         Historia.findOneAndDelete({ _id: req.params.id })
-        .then(() => res.status(200).send("La historia ha sido eliminada"))
-        .catch(next);  
-    }else 
+          .then(() => res.status(200).send("La historia ha sido eliminada"))
+          .catch(next);
+      } else
         return res
-        .status(401)
-        .send("No tienes permiso para eliminar este objeto.");
-})}
+          .status(401)
+          .send("No tienes permiso para eliminar este objeto.");
+    })
+    .catch(next);
+}
 
 module.exports = {
   crearHistoria,
@@ -108,4 +134,6 @@ module.exports = {
   modificarHistoria,
   eliminarHistoria,
   obtenerHistoriasLimitadas,
+  buscarPorAtributo,
+  buscarAtributo
 };
