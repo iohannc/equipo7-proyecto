@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Usuario = mongoose.model("Usuario");
 const passport = require("passport");
+const jwt = require('jsonwebtoken');
 
 /* CRUD */
 
@@ -18,31 +19,18 @@ function crearUsuario(req, res, next) {
     })
     .catch(next);
 }
-// function obtenerUsuario(req, res, next) {                              //Obteniendo usuario desde MongoDB.
-//   var id = req.params.id;
-//   Usuario.findById(id||req.usuario.id, (err, user) => {
-//     if (!user || err) {
-//       return res.sendStatus(401)
-//     }
-//     return res.send(user.publicData());
-//   }).catch(next);
-// }
 function obtenerUsuario(req, res, next) {
   // //Obteniendo usuario desde MongoDB.
   var id = req.params.id;
-  // Usuario.findOne(req.params.id)
-  // .then((us) => {
-  //   if (!us) return res.sendStatus(401);
-  //   return res.send(us.publicData())
-  // }).catch(next);
   Usuario.find({ _id: id }, (err, user) => {
     if (!user || err) {
       return res.sendStatus(401);
     }
+    // No pudimos solucionar el problema con el método publicData()
     user[0].hash = "";
     user[0].salt = "";
     return res.send(user);
-  }).catch(next);
+  }).catch((err) => res.send(err));
 }
 
 function obtenerUsuarios(req, res, next) {
@@ -91,26 +79,37 @@ function modificarUsuario(req, res, next) {
         } else continue;
       }
       us.save()
-        .then((updated) => res.status(201).json(updated.publicData()))
+        .then((updated) => res.status(201).send("Modificación exitosa"))
         .catch(next);
     })
     .catch(next);
 }
 
 function eliminarUsuario(req, res, next) {
-  Usuario.findOneAndDelete({ _id: req.params.id })
-    .then((r) => res.status(200).send("El usuario ha sido eliminado"))
-    .catch(next);
+  const token = req.headers.authorization.split(" ");
+  const jwt_payload = jwt.decode(token[1]);
+  const nuevaInfo = req.body;
+  if (
+    jwt_payload._id == req.params.id ||
+    Usuario.findById(jwt_payload.id).then((admin) => admin.administrador)
+  ) {
+    Usuario.findOneAndDelete({ _id: req.params.id })
+      .then((r) => res.status(200).send("El usuario ha sido eliminado"))
+      .catch(next);
+  }
 }
+
 function iniciarSesion(req, res, next) {
   if (!req.body.email) {
-    return res.status(422).json({ errors: { email: "no puede estar vacío" } });
+    return res
+      .status(422)
+      .json({ errors: { email: "El campo email no puede estar vacío." } });
   }
 
   if (!req.body.password) {
-    return res
-      .status(422)
-      .json({ errors: { password: "no puede estar vacío" } });
+    return res.status(422).json({
+      errors: { password: "El campo password no puede estar vacío." },
+    });
   }
 
   passport.authenticate(
@@ -130,17 +129,7 @@ function iniciarSesion(req, res, next) {
     }
   )(req, res, next);
 }
-// function cifrarcontraseña(req, res, next) {
-//   Usuario.updateMany({},
-//     {contraseña:"loquesea"}, function (err, docs) {
-//     if (err){
-//         console.log(err)
-//     }
-//     else{
-//         console.log("Updated Docs : ", docs);
-//     }
-// });
-// }
+
 module.exports = {
   crearUsuario,
   obtenerUsuario,
