@@ -22,10 +22,8 @@ require('./models/Historia')
 app.use(passport.initialize());
 app.use(passport.session());
 require('./config/passport') // Necesario para que funcione el inicio de sesión.
-
 //Configurando las rutas
 app.use('/v1', require('./routes'));
-
 // Inicializando el servidor
 app.listen(process.env.PORT, () => {
     console.log(`Server is listening on ${process.env.PORT}`);
