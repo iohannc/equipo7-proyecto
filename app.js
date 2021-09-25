@@ -19,9 +19,9 @@ mongoose.set("debug", true)
 
 require('./models/Usuario')
 require('./models/Historia')
-require('./config/passport') // Necesario para que funcione el inicio de sesión.
 app.use(passport.initialize());
 app.use(passport.session());
+require('./config/passport') // Necesario para que funcione el inicio de sesión.
 
 //Configurando las rutas
 app.use('/v1', require('./routes'));
