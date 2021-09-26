@@ -24,7 +24,7 @@ function obtenerUsuario(req, res, next) {
   var id = req.params.id;
   Usuario.find({ _id: id }, (err, user) => {
     if (!user || err) {
-      return res.sendStatus(401);
+      return res.status(404).json({errors: {mensaje: "No se encontró ningún usuario."}});
     }
     // No pudimos solucionar el problema con el método publicData()
     user[0].hash = "";
@@ -36,7 +36,7 @@ function obtenerUsuario(req, res, next) {
 function obtenerUsuarios(req, res, next) {
   Usuario.find({}, function (err, docs) {
     if (!docs || err) {
-      return res.sendStatus(401);
+      return res.status(404).json({errors: {mensaje: "No se encontró ningún usuario."}});
     }
     let array = [];
     for (let i = 0; i < docs.length; i++) {
@@ -51,7 +51,7 @@ function obtenerUsuarios(req, res, next) {
 function obtenerUsuariosLimitados(req, res) {
   Usuario.find({}, function (err, docs) {
     if (!docs || err) {
-      return res.sendStatus(401);
+      return res.status(404).json({errors: {mensaje: "No se encontró ningún usuario."}});
     }
   })
     .limit(parseInt(req.params.n))
@@ -69,7 +69,9 @@ function obtenerUsuariosLimitados(req, res) {
 function modificarUsuario(req, res, next) {
   Usuario.findById(req.params.id)
     .then((us) => {
-      if (!us) return res.sendStatus(404);
+      if (!us) {
+        return res.status(404).json({errors: {mensaje: "No se encontró ningún usuario."}});
+      }
       const nuevaInfo = req.body;
       const nuevaInfoKeys = Object.keys(nuevaInfo);
       for (let i = 0; i < nuevaInfoKeys.length; i++) {

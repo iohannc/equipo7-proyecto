@@ -23,7 +23,7 @@ function obtenerHistoria(req, res, next) {
   const re = new RegExp(`${titulo}`, "i");
   Historia.find({ titulo: re }, (err, historia) => {
     if (!historia || err) {
-      return res.sendStatus(404);
+      return res.status(404).json({errors: {mensaje: "No se encontró ninguna historia."}});
     }
     return res.send(historia);
   }).catch(next);
@@ -31,7 +31,7 @@ function obtenerHistoria(req, res, next) {
 function obtenerHistorias(req, res, next) {
   Historia.find({}, function (err, docs) {
     if (!docs || err) {
-      return res.sendStatus(404);
+      return res.status(404).json({errors: {mensaje: "No se encontró ninguna historia."}});
     }
     let array = [];
     for (let i = 0; i < docs.length; i++) {
@@ -43,8 +43,9 @@ function obtenerHistorias(req, res, next) {
 
 function obtenerHistoriasLimitadas(req, res, next) {
   Historia.find({}, function (err, docs) {
-    if (!docs || err) return res.sendStatus(404);
-  })
+    if (!docs || err) {
+      return res.status(404).json({errors: {mensaje: "No se encontró ninguna historia."}});
+  }})
     .limit(parseInt(req.params.n))
     .then((docs) => {
       let array = [];
@@ -58,7 +59,9 @@ function obtenerHistoriasLimitadas(req, res, next) {
 
 function buscarPorAtributo(req, res, next) {
     Historia.find(req.query, function(err, docs){
-        if (!docs || err) return res.sendStatus(404);
+        if (!docs || err) {
+          return res.status(404).json({errors: {mensaje: "No se encontró ninguna historia con ese atributo."}});
+        };
     })
     .then(historias => res.status(200).send(historias))
     .catch(next);
@@ -81,7 +84,9 @@ function buscarAtributo(req, res, next) {
 function modificarHistoria(req, res, next) {
   Historia.findById(req.params.id)
     .then((historia) => {
-      if (!historia) return res.sendStatus(404);
+      if (!historia) {
+        return res.status(404).json({errors: {mensaje: "No se encontró ninguna historia."}});
+      };
       const token = req.headers.authorization.split(" ");
       const jwt_payload = jwt.decode(token[1]);
       const nuevaInfo = req.body;
