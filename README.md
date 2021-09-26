@@ -14,6 +14,10 @@ Crear API de conexión a una base de datos de historias de terror.
 Se desarrolla una API sustentada en ExpressJS con el objetivo de registrar y dar a conocer historias de terror de diferentes temáticas en un sistema versatil para cualquier usuario.
 Se espera el desarrollo de un sistema eficiente que pueda ser la base de una comunidad activa dentro del terror literario.
 
+### Links de Heroku y Swagger
+- https://proyecto-equipo7.herokuapp.com/v1/
+- https://app.swaggerhub.com/apis/frasgado/Historias-de-Terror/1.0#/
+
 ### Entidades
 - Usuarios
 
