@@ -21,7 +21,7 @@ function crearHistoria(req, res, next) {
 function obtenerHistoria(req, res, next) {
   const titulo = req.params.titulo;
   const re = new RegExp(`${titulo}`, "i");
-  Historia.findOne({ titulo: re }, (err, historia) => {
+  Historia.find({ titulo: re }, (err, historia) => {
     if (!historia || err) {
       return res.sendStatus(404);
     }
