@@ -16,7 +16,7 @@ Se espera el desarrollo de un sistema eficiente que pueda ser la base de una com
 
 ### Links de Heroku y Swagger
 - https://proyecto-equipo7.herokuapp.com/v1/
-- https://app.swaggerhub.com/apis/frasgado/Historias-de-Terror/1.0#/
+- https://app.swaggerhub.com/apis-docs/frasgado/Historias-de-Terror/1.0
 
 ### Entidades
 - Usuarios
