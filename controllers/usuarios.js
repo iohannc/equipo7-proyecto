@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Usuario = mongoose.model("Usuario");
 const passport = require("passport");
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
 /* CRUD */
 
@@ -24,7 +24,9 @@ function obtenerUsuario(req, res, next) {
   var id = req.params.id;
   Usuario.find({ _id: id }, (err, user) => {
     if (!user || err) {
-      return res.status(404).json({errors: {mensaje: "No se encontró ningún usuario."}});
+      return res
+        .status(404)
+        .json({ errors: { mensaje: "No se encontró ningún usuario." } });
     }
     // No pudimos solucionar el problema con el método publicData()
     user[0].hash = "";
@@ -36,7 +38,9 @@ function obtenerUsuario(req, res, next) {
 function obtenerUsuarios(req, res, next) {
   Usuario.find({}, function (err, docs) {
     if (!docs || err) {
-      return res.status(404).json({errors: {mensaje: "No se encontró ningún usuario."}});
+      return res
+        .status(404)
+        .json({ errors: { mensaje: "No se encontró ningún usuario." } });
     }
     let array = [];
     for (let i = 0; i < docs.length; i++) {
@@ -51,7 +55,9 @@ function obtenerUsuarios(req, res, next) {
 function obtenerUsuariosLimitados(req, res) {
   Usuario.find({}, function (err, docs) {
     if (!docs || err) {
-      return res.status(404).json({errors: {mensaje: "No se encontró ningún usuario."}});
+      return res
+        .status(404)
+        .json({ errors: { mensaje: "No se encontró ningún usuario." } });
     }
   })
     .limit(parseInt(req.params.n))
@@ -70,18 +76,29 @@ function modificarUsuario(req, res, next) {
   Usuario.findById(req.params.id)
     .then((us) => {
       if (!us) {
-        return res.status(404).json({errors: {mensaje: "No se encontró ningún usuario."}});
+        return res
+          .status(404)
+          .json({ errors: { mensaje: "No se encontró ningún usuario." } });
       }
-      const nuevaInfo = req.body;
-      const nuevaInfoKeys = Object.keys(nuevaInfo);
-      for (let i = 0; i < nuevaInfoKeys.length; i++) {
-        if (typeof us[nuevaInfoKeys[i]] !== "undefined") {
-          console.log(us[nuevaInfoKeys[i]]);
-          us[nuevaInfoKeys[i]] = nuevaInfo[nuevaInfoKeys[i]];
-        } else continue;
-      }
+      if (
+        jwt_payload._id == req.params.id ||
+        Usuario.findById(jwt_payload.id).then((admin) => admin.administrador)
+      ) {
+        const nuevaInfo = req.body;
+        const nuevaInfoKeys = Object.keys(nuevaInfo);
+        for (let i = 0; i < nuevaInfoKeys.length; i++) {
+          if (typeof us[nuevaInfoKeys[i]] !== "undefined") {
+            us[nuevaInfoKeys[i]] = nuevaInfo[nuevaInfoKeys[i]];
+          } else continue;
+        }
+      } else
+        res
+          .status(401)
+          .json({
+            errors: { mensaje: "No tienes permiso para eliminar este objeto." },
+          });
       us.save()
-        .then((updated) => res.status(201).send("Modificación exitosa"))
+        .then(() => res.status(201).json({mensaje: "Modificación exitosa"}))
         .catch(next);
     })
     .catch(next);
@@ -90,15 +107,19 @@ function modificarUsuario(req, res, next) {
 function eliminarUsuario(req, res, next) {
   const token = req.headers.authorization.split(" ");
   const jwt_payload = jwt.decode(token[1]);
-  const nuevaInfo = req.body;
   if (
     jwt_payload._id == req.params.id ||
     Usuario.findById(jwt_payload.id).then((admin) => admin.administrador)
   ) {
     Usuario.findOneAndDelete({ _id: req.params.id })
-      .then((r) => res.status(200).send("El usuario ha sido eliminado"))
+      .then((r) => res.status(200).send({mensaje: "El usuario ha sido eliminado"}))
       .catch(next);
-  }
+  } else
+    res
+      .status(401)
+      .json({
+        errors: { mensaje: "No tienes permiso para eliminar este objeto." },
+      });
 }
 
 function iniciarSesion(req, res, next) {
@@ -129,7 +150,7 @@ function iniciarSesion(req, res, next) {
         return res.status(422).json(info);
       }
     }
-  )(req, res, next);
+  );
 }
 
 module.exports = {

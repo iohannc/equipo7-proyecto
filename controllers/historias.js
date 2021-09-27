@@ -122,7 +122,7 @@ function eliminarHistoria(req, res, next) {
         Usuario.findById(jwt_payload.id).then((admin) => admin.administrador)
       ) {
         Historia.findOneAndDelete({ _id: req.params.id })
-          .then(() => res.status(200).send("La historia ha sido eliminada"))
+          .then(() => res.status(200).send({mensaje: "La historia ha sido eliminada"}))
           .catch(next);
       } else
         return res
