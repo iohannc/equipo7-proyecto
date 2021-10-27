@@ -124,12 +124,6 @@ function eliminarUsuario(req, res, next) {
 
 function iniciarSesion(req, res, next) {
 
-  if (!req.body.password) {
-    return res.status(422).json({
-      errors: { password: "El campo password no puede estar vacío." },
-    });
-  }
-
   passport.authenticate(
     "local",
     { session: false },
